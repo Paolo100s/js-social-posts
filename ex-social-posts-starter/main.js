@@ -99,7 +99,7 @@ posts.forEach(element => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="1">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -111,4 +111,38 @@ posts.forEach(element => {
             </div>            
         </div>
     `
-});
+}
+);
+
+// Aggiunta tasto like
+const buttonLike = document.querySelectorAll('.js-like-button');
+// console.log(buttonLike);
+
+// Array dei post con like
+let likedPosts = [];
+
+for (let i = 0; i < buttonLike.length; i++) {
+
+    const postFinal = posts[i];
+    
+    const likesCounter = document.getElementById(`counter_${postFinal.id}`);
+
+    console.log(postFinal.likes);
+
+    buttonLike[i].addEventListener('click', function() {
+        if (buttonLike[i].classList.contains('like-button--liked')) {
+            buttonLike[i].classList.remove('like-button--liked');
+            postFinal.likes--;
+            likedPosts = likedPosts.filter(postId => postId !== postFinal.id);
+
+        } else {
+            buttonLike[i].classList.add('like-button--liked');
+            postFinal.likes++;
+            likedPosts = [...likedPosts, postFinal.id];
+            
+        }
+        likesCounter.innerHTML = postFinal.likes;
+    }
+    );
+    
+}
